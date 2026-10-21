@@ -65,6 +65,15 @@
     .about dd { margin:0; }
     .quote blockquote { font:400 clamp(30px,3.6vw,50px)/1.18 'Instrument Serif',serif; letter-spacing:-.015em; margin:0; max-width:30ch; }
     .quote blockquote em { color:var(--violet); }
+    .posters { display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,40px); padding:32px 0 0; }
+    .poster { display:block; }
+    .poster img { display:block; width:100%; height:auto; border:1px solid var(--line); background:#fff; box-shadow:0 18px 40px -26px rgba(23,26,25,.4); transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s; }
+    .poster:hover img { transform:translateY(-6px); box-shadow:0 30px 50px -28px rgba(87,74,224,.5); }
+    .poster-cap { display:flex; justify-content:space-between; gap:16px; align-items:baseline; padding-top:14px; }
+    .poster-cap h3 { font:400 clamp(20px,2vw,26px)/1.2 'Instrument Serif',serif; margin:0; max-width:40ch; }
+    .poster-cap .cap { color:var(--violet); white-space:nowrap; }
+    .poster-cap h3 { font:400 clamp(20px,2vw,26px)/1.2 'Instrument Serif',serif; margin:0; max-width:40ch; }
+    .poster-cap .cap { color:var(--violet); white-space:nowrap; }
     .contact { background:var(--ink); color:var(--paper); padding:clamp(56px,8vw,96px) var(--pad) 28px; }
     .contact h2 { font:400 clamp(48px,7vw,104px)/.95 'Instrument Serif',serif; letter-spacing:-.03em; margin:0 0 32px; }
     .contact h2 em { color:var(--chart); }
@@ -80,6 +89,7 @@
       .about dl dd { margin-bottom:10px; }
       .stats { padding-left:0; gap:24px; grid-template-columns:repeat(2,auto); }
       .hero-photos::before { width:100%; bottom:40%; opacity:.3; }
+      .posters { grid-template-columns:1fr; }
       .pub { grid-template-columns:3ch 1fr; }
       .pub .tag { grid-column:2; }
     }
@@ -107,7 +117,7 @@
       <div class="hero-text">
         <h1>Making sense<br>of the <em>unseen.</em></h1>
         <div class="hero-foot">
-          <p>Ethan Ge — electrical engineering student and researcher at UCLA. I build systems that measure the physical world, and study when those measurements can be trusted.</p>
+          <p>Undergraduate @ UCLA<br>Electrical Engineer interested in wireless, sensing, and machine learning.</p>
           <div class="legend cap">RemoteRF · UCLA deployment</div>
         </div>
       </div>
@@ -144,6 +154,20 @@
 
     <section class="sec quote">
       <blockquote>Deciding when a measurement can be trusted, and what to do when it cannot, became <em>the question I kept returning to.</em></blockquote>
+    </section>
+
+    <section class="sec" id="posters">
+      <div class="sec-head"><h2>Posters</h2><span>Asilomar 2026</span></div>
+      <div class="posters">
+        <a class="poster" href="assets/posters/steer-rl-poster.pdf" target="_blank" rel="noopener">
+          <img src="assets/posters/steer-rl-preview.jpg" alt="Poster: Limited Budget Beam Refinement for Full-Duplex Wireless Communication Systems" loading="lazy" />
+          <div class="poster-cap"><h3>Limited Budget Beam Refinement for Full-Duplex Wireless Communication Systems</h3><span class="cap">View PDF ↗</span></div>
+        </a>
+        <a class="poster" href="assets/posters/remoterf-poster.pdf" target="_blank" rel="noopener">
+          <img src="assets/posters/remoterf-preview.jpg" alt="Poster: RemoteRF, an Open-Source, Shared Global Testbed for Wireless Sensing and Communication" loading="lazy" />
+          <div class="poster-cap"><h3>RemoteRF: An Open-Source, Shared Global Testbed for Wireless Sensing and Communication</h3><span class="cap">View PDF ↗</span></div>
+        </a>
+      </div>
     </section>
 
     <section class="sec" id="publications">
