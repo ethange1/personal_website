@@ -63,17 +63,19 @@
     .about dl { display:grid; grid-template-columns:11ch 1fr; gap:14px 24px; margin:22px 0 0; }
     .about dt { color:var(--muted); padding-top:2px; }
     .about dd { margin:0; }
-    .quote blockquote { font:400 clamp(30px,3.6vw,50px)/1.18 'Instrument Serif',serif; letter-spacing:-.015em; margin:0; max-width:30ch; }
-    .quote blockquote em { color:var(--violet); }
-    .posters { display:grid; grid-template-columns:1fr 1fr; gap:clamp(20px,3vw,40px); padding:32px 0 0; }
-    .poster { display:block; }
-    .poster img { display:block; width:100%; height:auto; border:1px solid var(--line); background:#fff; box-shadow:0 18px 40px -26px rgba(23,26,25,.4); transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s; }
-    .poster:hover img { transform:translateY(-6px); box-shadow:0 30px 50px -28px rgba(87,74,224,.5); }
-    .poster-cap { display:flex; justify-content:space-between; gap:16px; align-items:baseline; padding-top:14px; }
-    .poster-cap h3 { font:400 clamp(20px,2vw,26px)/1.2 'Instrument Serif',serif; margin:0; max-width:40ch; }
-    .poster-cap .cap { color:var(--violet); white-space:nowrap; }
-    .poster-cap h3 { font:400 clamp(20px,2vw,26px)/1.2 'Instrument Serif',serif; margin:0; max-width:40ch; }
-    .poster-cap .cap { color:var(--violet); white-space:nowrap; }
+    .project { display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr); gap:clamp(28px,4vw,64px); padding:clamp(40px,5vw,64px) 0; border-bottom:1px solid var(--line); align-items:start; }
+    .project .shot { display:block; }
+    .project .shot img { display:block; width:100%; height:auto; border:1px solid var(--line); background:#fff; box-shadow:0 18px 40px -26px rgba(23,26,25,.4); transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s; }
+    .project .shot:hover img { transform:translateY(-6px); box-shadow:0 30px 50px -28px rgba(87,74,224,.5); }
+    .project .shot .cap { display:block; margin-top:12px; color:var(--violet); }
+    .project .info > .cap { color:var(--muted); }
+    .project .info > .cap a:hover { color:var(--violet); }
+    .project h3 { font:400 clamp(34px,4vw,52px)/1 'Instrument Serif',serif; letter-spacing:-.02em; margin:14px 0 18px; }
+    .project .info > p { margin:0 0 24px; color:var(--muted); max-width:60ch; }
+    .project .stats { margin:0 0 28px; padding:0; border:0; grid-template-columns:repeat(3,auto); justify-content:start; gap:40px; }
+    .project .papers { border-top:1px solid var(--line); }
+    .project .pub { padding:18px 0; }
+    .pub h4 { font:400 clamp(20px,2vw,26px)/1.2 'Instrument Serif',serif; margin:0 0 8px; max-width:48ch; }
     .contact { background:var(--ink); color:var(--paper); padding:clamp(56px,8vw,96px) var(--pad) 28px; }
     .contact h2 { font:400 clamp(48px,7vw,104px)/.95 'Instrument Serif',serif; letter-spacing:-.03em; margin:0 0 32px; }
     .contact h2 em { color:var(--chart); }
@@ -89,15 +91,15 @@
       .about dl dd { margin-bottom:10px; }
       .stats { padding-left:0; gap:24px; grid-template-columns:repeat(2,auto); }
       .hero-photos::before { width:100%; bottom:40%; opacity:.3; }
-      .posters { grid-template-columns:1fr; }
+      .project { grid-template-columns:1fr; }
       .pub { grid-template-columns:3ch 1fr; }
       .pub .tag { grid-column:2; }
     }
     /* Scroll reveals (only when JS + motion are allowed; html.js is set in <head>) */
     .hero-photos { position:absolute; inset:0; pointer-events:none; }
-    .js :is(.sec-head, .row, .stats, .pub, .award, .quote blockquote, .about .lede, .about dl, .hero h1, .hero-foot) {
+    .js :is(.sec-head, .row, .stats, .pub, .award, .about .lede, .about dl, .hero h1, .hero-foot) {
       opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d, 0ms); }
-    .js :is(.sec-head, .row, .stats, .pub, .award, .quote blockquote, .about .lede, .about dl, .hero h1, .hero-foot).in { opacity:1; transform:none; }
+    .js :is(.sec-head, .row, .stats, .pub, .award, .about .lede, .about dl, .hero h1, .hero-foot).in { opacity:1; transform:none; }
     .js .hero-photos { opacity:0; transform:scale(1.04); transition:opacity 1.6s ease, transform 2.4s cubic-bezier(.2,.7,.2,1); }
     .js .hero-photos.in { opacity:1; transform:none; }
     .js .sec-head { position:relative; border-bottom-color:transparent; }
@@ -109,7 +111,7 @@
 <body>
   <header>
     <a class="cap" href="#">Ethan Ge</a>
-    <nav class="cap"><a href="#work">Work</a><a href="#publications">Publications</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+    <nav class="cap"><a href="#research">Research</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
   </header>
   <main>
     <section class="hero">
@@ -123,80 +125,66 @@
       </div>
     </section>
 
-    <section class="sec" id="work">
-      <div class="sec-head"><h2>Work</h2><span>2021–2026</span></div>
-      <div class="row">
-        <h3>Beam refinement</h3>
-        <p>The literature treated full-duplex beam refinement as a search problem. The better question was what each measurement could rule out: self-interference at every beam pair comes from the same channel, so a few measurements, properly modeled, constrain all of them. The resulting probe-and-prune framework matches the state of the art at a quarter of the measurement cost, retaining 95.5% of exhaustive-search performance.</p>
-        <span class="cap">WirelessLab@UCLA · 2024–</span>
-      </div>
-      <a class="row" href="https://remoterf.net" target="_blank" rel="noopener">
-        <h3>RemoteRF ↗</h3>
-        <p>Run your own code, on your own machine, against a real radio across campus, as if it were plugged into your laptop. Built from a few radios on a USB hub into infrastructure that has run continuously for two years and is now part of every offering of UCLA's undergraduate and graduate communications courses.</p>
-        <span class="cap">remoterf.net</span>
-      </a>
-      <div class="stats" aria-label="RemoteRF usage">
-        <div><b>250+</b><span>users</span></div>
-        <div><b>7,200+</b><span>reservations</span></div>
-        <div><b>3,800+</b><span>hours</span></div>
-      </div>
-      <!-- <div class="row">
-        <h3>Pose estimation for telemedicine</h3>
-        <p>As a high-school sophomore I emailed professors to see what research was like. One answered. I built a webcam-based telemedicine prototype, and when the pose model produced forearms three times the length of the upper arm, a calibration layer that flagged implausible joint angles and corrected them from each joint's recent motion.</p>
-        <span class="cap">UC Riverside · 2021–22</span>
-      </div> -->
-      <div class="row">
-        <h3>Segment Games</h3>
-        <p>Co-founder and graphics/systems engineer. Real-time rendering and shaders in Unity; shipped <em>Iron Inc.</em> (Steam) and <em>Pocket Panzers</em> (iOS, Android).</p>
-        <span class="cap">2023–2026</span>
-      </div>
-    </section>
+    <section class="sec" id="research">
+      <div class="sec-head"><h2>Research</h2><span>2021–2026</span></div>
 
-    <section class="sec quote">
-      <blockquote>Deciding when a measurement can be trusted, and what to do when it cannot, became <em>the question I kept returning to.</em></blockquote>
-    </section>
-
-    <section class="sec" id="posters">
-      <div class="sec-head"><h2>Posters</h2><span>Asilomar 2026</span></div>
-      <div class="posters">
-        <a class="poster" href="assets/posters/steer-rl-poster.pdf" target="_blank" rel="noopener">
+      <div class="project">
+        <a class="shot" href="assets/posters/steer-rl-poster.pdf" target="_blank" rel="noopener">
           <img src="assets/posters/steer-rl-preview.jpg" alt="Poster: Limited Budget Beam Refinement for Full-Duplex Wireless Communication Systems" loading="lazy" />
-          <div class="poster-cap"><h3>Limited Budget Beam Refinement for Full-Duplex Wireless Communication Systems</h3><span class="cap">View PDF ↗</span></div>
+          <span class="cap">Poster PDF ↗</span>
         </a>
-        <a class="poster" href="assets/posters/remoterf-poster.pdf" target="_blank" rel="noopener">
-          <img src="assets/posters/remoterf-preview.jpg" alt="Poster: RemoteRF, an Open-Source, Shared Global Testbed for Wireless Sensing and Communication" loading="lazy" />
-          <div class="poster-cap"><h3>RemoteRF: An Open-Source, Shared Global Testbed for Wireless Sensing and Communication</h3><span class="cap">View PDF ↗</span></div>
-        </a>
+        <div class="info">
+          <span class="cap">WirelessLab@UCLA · 2024–</span>
+          <h3>Beam refinement</h3>
+          <p>Full-duplex base stations must pick a beam pair while self-interference and cross-link interference keep shifting. Probing every pair is too expensive, and prior methods like STEER+ spend airtime on local searches that repeat as users move. We model self-interference across all candidate pairs with a transformer neural process, probe the pair with the highest plausible performance, and stop once the best pair so far is likely near-optimal. On measured 28 GHz data, it probes about 10 of 625 candidate pairs on average and outperforms STEER+ and Bayesian optimization at the same airtime.</p>
+          <div class="papers">
+            <article class="pub">
+              <span class="n">1.</span>
+              <div>
+                <h4>Limited Budget Beam Refinement for Full-Duplex Wireless Communication Systems</h4>
+                <p><strong>Ethan Y. Ge</strong>, Ian P. Roberts. Asilomar Conference on Signals, Systems, and Computers, 2026.</p>
+              </div>
+              <span class="tag on">Accepted</span>
+            </article>
+          </div>
+        </div>
       </div>
-    </section>
 
-    <section class="sec" id="publications">
-      <div class="sec-head"><h2>Publications</h2></div>
-      <article class="pub">
-        <span class="n">1.</span>
-        <div>
-          <h3>Fixed-Budget Beam Refinement for Full-Duplex Massive MIMO Wireless Systems</h3>
-          <p><strong>Ethan Y. Ge</strong>, Ian P. Roberts. Asilomar Conference on Signals, Systems, and Computers, 2026.</p>
+      <div class="project">
+        <a class="shot" href="assets/posters/remoterf-poster.pdf" target="_blank" rel="noopener">
+          <img src="assets/posters/remoterf-preview.jpg" alt="Poster: RemoteRF, an Open-Source, Shared Global Testbed for Wireless Sensing and Communication" loading="lazy" />
+          <span class="cap">Poster PDF ↗</span>
+        </a>
+        <div class="info">
+          <span class="cap"><a href="https://remoterf.net" target="_blank" rel="noopener">remoterf.net ↗</a></span>
+          <h3>RemoteRF</h3>
+          <p>Run your own code, on your own machine, against a real radio across campus, as if it were plugged into your laptop. Built from a few radios on a USB hub into infrastructure that has run continuously for two years and is now part of every offering of UCLA's undergraduate and graduate communications courses.</p>
+          <div class="stats" aria-label="RemoteRF usage">
+            <div><b>250+</b><span>users</span></div>
+            <div><b>7,200+</b><span>reservations</span></div>
+            <div><b>3,800+</b><span>hours</span></div>
+          </div>
+          <div class="papers">
+            <article class="pub">
+              <span class="n">2.</span>
+              <div>
+                <h4>RemoteRF: An Open-Source, Shared Global Testbed for Wireless Sensing and Communication</h4>
+                <p><strong>Ethan Y. Ge</strong>, Ian P. Roberts. Asilomar Conference on Signals, Systems, and Computers, 2026.</p>
+              </div>
+              <span class="tag on">Accepted</span>
+            </article>
+            <article class="pub">
+              <span class="n">3.</span>
+              <div>
+                <h4>RemoteRF: An Open-Source Platform to Democratize Access to Software-Defined Radios in Wireless Research and Education</h4>
+                <p><strong>Ethan Y. Ge</strong>, Ian P. Roberts. IEEE Wireless Communications Magazine, 2026.</p>
+                <div class="links"><a href="https://arxiv.org/abs/2606.22161" target="_blank" rel="noopener">arXiv:2606.22161</a></div>
+              </div>
+              <span class="tag">Major revision</span>
+            </article>
+          </div>
         </div>
-        <span class="tag on">Accepted</span>
-      </article>
-      <article class="pub">
-        <span class="n">2.</span>
-        <div>
-          <h3>RemoteRF (title forthcoming)</h3>
-          <p><strong>Ethan Y. Ge</strong>, Ian P. Roberts. Asilomar Conference on Signals, Systems, and Computers, 2026.</p>
-        </div>
-        <span class="tag on">Accepted</span>
-      </article>
-      <article class="pub">
-        <span class="n">3.</span>
-        <div>
-          <h3>RemoteRF: An Open-Source Platform to Democratize Access to Software-Defined Radios in Wireless Research and Education</h3>
-          <p><strong>Ethan Y. Ge</strong>, Ian P. Roberts. IEEE Wireless Communications Magazine, 2026.</p>
-          <div class="links"><a href="https://arxiv.org/abs/2606.22161" target="_blank" rel="noopener">arXiv:2606.22161</a></div>
-        </div>
-        <span class="tag">Major revision</span>
-      </article>
+      </div>
     </section>
 
     <section class="sec" id="recognition">
@@ -207,6 +195,20 @@
       <div class="award"><span class="cap">2025</span><h3>Marconi Society Academic Forum</h3><p>Selected poster presenter.</p></div>
       <div class="award"><span class="cap">2026</span><h3><a href="https://www.samueli.ucla.edu/?p=90630" target="_blank" rel="noopener">Featured in UCLA Samueli Newsroom ↗</a></h3><p>Student research profile on RemoteRF.</p></div>
       <div class="award"><span class="cap">2023–27</span><h3><a href="https://www.ee.ucla.edu/fast-track-current-student-profile-class-of-2027/" target="_blank" rel="noopener">ECE Fast Track to Success Program ↗</a></h3><p>Selective honors program; how I found my way into Prof. Roberts's lab.</p></div>
+    </section>
+
+    <section class="sec" id="experience">
+      <div class="sec-head"><h2>Other experience</h2><span>2021–2026</span></div>
+      <!-- <div class="row">
+        <h3>Pose estimation for telemedicine</h3>
+        <p>As a high-school sophomore I emailed professors to see what research was like. One answered. I built a webcam-based telemedicine prototype, and when the pose model produced forearms three times the length of the upper arm, a calibration layer that flagged implausible joint angles and corrected them from each joint's recent motion.</p>
+        <span class="cap">UC Riverside · 2021–22</span>
+      </div> -->
+      <div class="row">
+        <h3>Segment Games</h3>
+        <p>Co-founder and graphics/systems engineer. Real-time rendering and shaders in Unity; shipped <em>Iron Inc.</em> (Steam) and <em>Pocket Panzers</em> (iOS, Android).</p>
+        <span class="cap">2023–2026</span>
+      </div>
     </section>
 
     <section class="sec about" id="about">
@@ -240,7 +242,7 @@
           if (e.target.matches('.stats')) e.target.querySelectorAll('b').forEach(countUp);
         });
       }, { rootMargin: '0px 0px -8% 0px' });
-      document.querySelectorAll('.hero-photos, .hero h1, .hero-foot, .sec-head, .row, .stats, .pub, .award, .quote blockquote, .about .lede, .about dl').forEach(el => io.observe(el));
+      document.querySelectorAll('.hero-photos, .hero h1, .hero-foot, .sec-head, .row, .stats, .pub, .award, .about .lede, .about dl').forEach(el => io.observe(el));
     }
   </script>
 </body>
