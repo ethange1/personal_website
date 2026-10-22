@@ -29,15 +29,25 @@
     h1 em { color:var(--violet); }
     .hero-foot { display:flex; justify-content:space-between; align-items:end; gap:24px; border-top:1px solid var(--ink); padding-top:16px; }
     .hero-foot p { margin:0; max-width:40ch; }
+    .hero-foot .intro { max-width:none; }
+    .hero-foot .intro .cap { display:block; color:var(--violet); margin-bottom:10px; }
+    .hero-foot .intro p { margin:0; max-width:none; font-size:clamp(16px,1.5vw,20px); line-height:1.4; letter-spacing:-.01em; }
     .legend { font-size:11px; color:var(--muted); text-align:right; font-variant-numeric:tabular-nums; }
     .sec { padding:clamp(64px,9vw,112px) var(--pad) 0; }
     .sec-head { display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid var(--ink); padding-bottom:12px; margin-bottom:8px; }
     .sec-head h2 { font:400 clamp(34px,4vw,48px)/1 'Instrument Serif',serif; letter-spacing:-.02em; margin:0; }
     .sec-head span { color:var(--muted); font-size:14px; }
-    .row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); grid-template-areas:"t d" "m d"; gap:6px 32px; padding:28px 0; border-bottom:1px solid var(--line); }
+    .row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.5fr); grid-template-areas:"t d" "m d"; grid-template-rows:auto 1fr; gap:6px 32px; padding:28px 0; border-bottom:1px solid var(--line); }
     .row h3 { grid-area:t; font:400 clamp(28px,3vw,38px)/1.05 'Instrument Serif',serif; letter-spacing:-.01em; margin:0; transition:color .2s; }
     .row p { grid-area:d; margin:0; color:var(--muted); max-width:58ch; }
-    .row .cap { grid-area:m; color:var(--muted); }
+    .row .desc { grid-area:d; max-width:58ch; }
+    .row .desc p { margin:0; }
+    .row .desc .role { color:var(--ink); font-weight:600; }
+    .row .desc .facts { display:grid; grid-template-columns:12ch 1fr; gap:10px 20px; margin:20px 0 0; padding-top:18px; border-top:1px solid var(--line); }
+    .row .desc .facts dt { color:var(--muted); padding-top:3px; }
+    .row .desc .facts dd { margin:0; color:var(--ink); }
+    .row .desc .note { margin-top:18px; font-size:15px; font-style:italic; }
+    .row > .cap { grid-area:m; align-self:start; color:var(--muted); }
     a.row:hover h3 { color:var(--violet); }
     .row:has(+ .stats) { border-bottom:0; padding-bottom:0; }
     .stats { display:grid; grid-template-columns:repeat(4,auto); justify-content:start; gap:48px; padding:28px 0 28px calc((100% - 32px) / 2.5 + 32px); border-bottom:1px solid var(--line); }
@@ -76,6 +86,19 @@
     .project .papers { border-top:1px solid var(--line); }
     .project .pub { padding:18px 0; }
     .pub h4 { font:400 clamp(20px,2vw,26px)/1.2 'Instrument Serif',serif; margin:0 0 8px; max-width:48ch; }
+    .row:has(+ .games) { border-bottom:0; padding-bottom:0; }
+    .games { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(20px,3vw,40px); padding:32px 0 40px; border-bottom:1px solid var(--line); }
+    .game-card { display:block; }
+    .game-card .media { aspect-ratio:16/9; overflow:hidden; border:1px solid var(--line); background:var(--ink); box-shadow:0 18px 40px -26px rgba(23,26,25,.4); transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s; }
+    .game-card .media img { display:block; width:100%; height:100%; object-fit:cover; }
+    .game-card:hover .media { transform:translateY(-6px); box-shadow:0 30px 50px -28px rgba(87,74,224,.5); }
+    .game-meta { display:flex; justify-content:space-between; align-items:flex-end; gap:16px; padding-top:16px; }
+    .game-meta h4 { font:400 clamp(24px,2.4vw,32px)/1 'Instrument Serif',serif; letter-spacing:-.01em; margin:0 0 8px; transition:color .2s; }
+    .game-meta .cap { color:var(--muted); }
+    .game-card:hover h4 { color:var(--violet); }
+    .game-meta .num { text-align:right; }
+    .game-meta .num b { display:block; font:400 clamp(28px,3vw,40px)/1 'Instrument Serif',serif; color:var(--violet); }
+    .game-meta .num span { color:var(--muted); font-size:14px; }
     .contact { background:var(--ink); color:var(--paper); padding:clamp(56px,8vw,96px) var(--pad) 28px; }
     .contact h2 { font:400 clamp(48px,7vw,104px)/.95 'Instrument Serif',serif; letter-spacing:-.03em; margin:0 0 32px; }
     .contact h2 em { color:var(--chart); }
@@ -87,19 +110,20 @@
       body { font-size:16px; }
       header { gap:12px; } header > a { white-space:nowrap; } header nav { gap:14px; } header .cap, header nav { font-size:11px; letter-spacing:.04em; }
       .row { grid-template-columns:1fr; grid-template-areas:"t" "d" "m"; gap:8px; }
-      .award, .about, .about dl { grid-template-columns:1fr; gap:4px; }
+      .award, .about, .about dl, .row .desc .facts { grid-template-columns:1fr; gap:4px; }
       .about dl dd { margin-bottom:10px; }
       .stats { padding-left:0; gap:24px; grid-template-columns:repeat(2,auto); }
-      .hero-photos::before { width:100%; bottom:40%; opacity:.3; }
+      .games { grid-template-columns:1fr; }
+        .hero-photos::before { width:100%; bottom:40%; opacity:.3; }
       .project { grid-template-columns:1fr; }
       .pub { grid-template-columns:3ch 1fr; }
       .pub .tag { grid-column:2; }
     }
     /* Scroll reveals (only when JS + motion are allowed; html.js is set in <head>) */
     .hero-photos { position:absolute; inset:0; pointer-events:none; }
-    .js :is(.sec-head, .row, .stats, .pub, .award, .about .lede, .about dl, .hero h1, .hero-foot) {
+    .js :is(.sec-head, .row, .stats, .games, .pub, .award, .about .lede, .about dl, .hero h1, .hero-foot) {
       opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d, 0ms); }
-    .js :is(.sec-head, .row, .stats, .pub, .award, .about .lede, .about dl, .hero h1, .hero-foot).in { opacity:1; transform:none; }
+    .js :is(.sec-head, .row, .stats, .games, .pub, .award, .about .lede, .about dl, .hero h1, .hero-foot).in { opacity:1; transform:none; }
     .js .hero-photos { opacity:0; transform:scale(1.04); transition:opacity 1.6s ease, transform 2.4s cubic-bezier(.2,.7,.2,1); }
     .js .hero-photos.in { opacity:1; transform:none; }
     .js .sec-head { position:relative; border-bottom-color:transparent; }
@@ -119,7 +143,7 @@
       <div class="hero-text">
         <h1>Making sense<br>of the <em>unseen.</em></h1>
         <div class="hero-foot">
-          <p>Undergraduate @ UCLA<br>Electrical Engineer interested in wireless, sensing, and machine learning.</p>
+          <div class="intro"><span class="cap">Undergraduate @ UCLA</span><p>Electrical engineer interested in wireless, sensing, and machine learning.</p></div>
           <div class="legend cap">RemoteRF · UCLA deployment</div>
         </div>
       </div>
@@ -144,7 +168,7 @@
                 <h4>Limited Budget Beam Refinement for Full-Duplex Wireless Communication Systems</h4>
                 <p><strong>Ethan Y. Ge</strong>, Ian P. Roberts. Asilomar Conference on Signals, Systems, and Computers, 2026.</p>
               </div>
-              <span class="tag on">Accepted</span>
+              <span class="tag on">To appear</span>
             </article>
           </div>
         </div>
@@ -171,7 +195,7 @@
                 <h4>RemoteRF: An Open-Source, Shared Global Testbed for Wireless Sensing and Communication</h4>
                 <p><strong>Ethan Y. Ge</strong>, Ian P. Roberts. Asilomar Conference on Signals, Systems, and Computers, 2026.</p>
               </div>
-              <span class="tag on">Accepted</span>
+              <span class="tag on">To appear</span>
             </article>
             <article class="pub">
               <span class="n">3.</span>
@@ -198,7 +222,7 @@
     </section>
 
     <section class="sec" id="experience">
-      <div class="sec-head"><h2>Other experience</h2><span>2021–2026</span></div>
+      <div class="sec-head"><h2>Past Experience</h2><span>2021–2026</span></div>
       <!-- <div class="row">
         <h3>Pose estimation for telemedicine</h3>
         <p>As a high-school sophomore I emailed professors to see what research was like. One answered. I built a webcam-based telemedicine prototype, and when the pose model produced forearms three times the length of the upper arm, a calibration layer that flagged implausible joint angles and corrected them from each joint's recent motion.</p>
@@ -206,8 +230,33 @@
       </div> -->
       <div class="row">
         <h3>Segment Games</h3>
-        <p>Co-founder and graphics/systems engineer. Real-time rendering and shaders in Unity; shipped <em>Iron Inc.</em> (Steam) and <em>Pocket Panzers</em> (iOS, Android).</p>
+        <div class="desc">
+          <p><strong class="role">Co-founder and lead graphics/systems engineer.</strong><br>Contributed heavily to <a href="https://store.steampowered.com/app/2791260/Iron_Inc/" target="_blank" rel="noopener"><em>Iron Inc.</em></a> (<a href="https://store.steampowered.com/app/2791260/Iron_Inc/" target="_blank" rel="noopener">Steam</a>) and <a href="https://apps.apple.com/app/id6744303947" target="_blank" rel="noopener"><em>Pocket Panzers</em></a> (<a href="https://apps.apple.com/app/id6744303947" target="_blank" rel="noopener">iOS</a>, <a href="https://play.google.com/store/apps/details?id=com.segmentgames.pocketpanzers" target="_blank" rel="noopener">Android</a>).</p>
+          <dl class="facts">
+            <dt class="cap">Graphics</dt><dd>Real-time rendering, shaders, terrain, 3D modeling, iconography</dd>
+            <dt class="cap">Performance</dt><dd>Advanced graphics optimization for PC and mobile platforms</dd>
+            <dt class="cap">Marketing</dt><dd>Trailer production and marketing asset design</dd>
+            <dt class="cap">Tools</dt><dd>Unity, Blender, Figma, Adobe Premiere Pro</dd>
+          </dl>
+          <p class="note">Stepped away in Sep 2026 to focus fully on research.</p>
+        </div>
         <span class="cap">2023–2026</span>
+      </div>
+      <div class="games">
+        <a class="game-card" href="https://store.steampowered.com/app/2791260/Iron_Inc/" target="_blank" rel="noopener">
+          <div class="media"><img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/2791260/515af58ec0d10d9cee2187f6d76cdb755ebd544d/capsule_616x353.jpg" alt="Iron Inc. key art" loading="lazy" /></div>
+          <div class="game-meta">
+            <div><h4>Iron Inc.</h4><span class="cap">Steam ↗</span></div>
+            <div class="num"><b>10,000+</b><span>wishlists</span></div>
+          </div>
+        </a>
+        <a class="game-card" href="https://apps.apple.com/app/id6744303947" target="_blank" rel="noopener">
+          <div class="media"><img src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource221/v4/cf/fb/fa/cffbfacb-2987-3ca8-f656-30a9c284bd1b/2688x1242-AaAaAaAa.png/1280x0w.jpg" alt="Pocket Panzers gameplay" loading="lazy" /></div>
+          <div class="game-meta">
+            <div><h4>Pocket Panzers</h4><span class="cap">iOS · Android ↗</span></div>
+            <div class="num"><b>50,000+</b><span>global downloads</span></div>
+          </div>
+        </a>
       </div>
     </section>
 
@@ -232,17 +281,17 @@
     if (document.documentElement.classList.contains('js')) {
       const countUp = b => {
         const txt = b.textContent, n = +txt.replace(/\D/g, ''), suffix = txt.replace(/[\d,]/g, ''), t0 = performance.now();
-        const step = now => { const p = Math.min(1, (now - t0) / 1400); b.textContent = Math.round(n * (1 - (1 - p) ** 3)).toLocaleString('en-US') + suffix; if (p < 1) requestAnimationFrame(step); };
+        const step = now => { const p = Math.min(1, (now - t0) / 2800); b.textContent = Math.round(n * (1 - (1 - p) ** 3)).toLocaleString('en-US') + suffix; if (p < 1) requestAnimationFrame(step); };
         requestAnimationFrame(step);
       };
       const io = new IntersectionObserver(entries => {
         entries.filter(e => e.isIntersecting).forEach((e, i) => {
           e.target.style.setProperty('--d', i * 90 + 'ms');
           e.target.classList.add('in'); io.unobserve(e.target);
-          if (e.target.matches('.stats')) e.target.querySelectorAll('b').forEach(countUp);
+          if (e.target.matches('.stats, .games')) e.target.querySelectorAll('b').forEach(countUp);
         });
       }, { rootMargin: '0px 0px -8% 0px' });
-      document.querySelectorAll('.hero-photos, .hero h1, .hero-foot, .sec-head, .row, .stats, .pub, .award, .about .lede, .about dl').forEach(el => io.observe(el));
+      document.querySelectorAll('.hero-photos, .hero h1, .hero-foot, .sec-head, .row, .stats, .games, .pub, .award, .about .lede, .about dl').forEach(el => io.observe(el));
     }
   </script>
 </body>
