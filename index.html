@@ -52,7 +52,7 @@
     .row p { grid-area:d; margin:0; color:var(--muted); max-width:58ch; }
     .row .desc { grid-area:d; max-width:58ch; }
     .row .desc p { margin:0; }
-    .row .desc .role { color:var(--ink); font-weight:600; }
+    .row .desc .role, .project .role { color:var(--ink); font-weight:600; }
     .row .desc .facts { display:grid; grid-template-columns:12ch 1fr; gap:10px 20px; margin:20px 0 0; padding-top:18px; border-top:1px solid var(--line); }
     .row .desc .facts dt { color:var(--muted); padding-top:3px; }
     .row .desc .facts dd { margin:0; color:var(--ink); }
@@ -91,6 +91,7 @@
     .project .info > .cap { color:var(--muted); }
     .project .info > .cap a:hover { color:var(--violet); }
     .project h3 { font:400 clamp(34px,4vw,52px)/1 'Instrument Serif',serif; letter-spacing:-.02em; margin:14px 0 18px; }
+    .project h3 em { color:var(--violet); }
     .project .info > p { margin:0 0 24px; color:var(--muted); max-width:60ch; }
     .project .stats { margin:0 0 28px; padding:0; border:0; grid-template-columns:repeat(3,auto); justify-content:start; gap:40px; }
     .project .papers { border-top:1px solid var(--line); }
@@ -171,8 +172,8 @@
         </a>
         <div class="info">
           <span class="cap"><a href="https://remoterf.net" target="_blank" rel="noopener">remoterf.net ↗</a></span>
-          <h3>RemoteRF</h3>
-          <p>Run your own code, on your own machine, against a real radio across campus, as if it were plugged into your laptop. Built from a few radios on a USB hub into infrastructure that has run continuously for two years and is now part of every offering of UCLA's undergraduate and graduate communications courses.</p>
+          <h3>One global testbed.<br><em>Accessible from anywhere.</em></h3>
+          <p><strong class="role">Creator and lead engineer.</strong><br>An open-source testbed that lets anyone, anywhere, run experiments on real radios, sensors, and lab equipment. Architected, shipped, and scaled from zero to production infrastructure that has run 24/7 since 2024. Built into every UCLA communications course and used by researchers and educators around the globe.</p>
           <div class="stats" aria-label="RemoteRF usage">
             <div><b>250+</b><span>users</span></div>
             <div><b>7,200+</b><span>reservations</span></div>
