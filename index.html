@@ -19,6 +19,7 @@
   <style>
     :root { --paper:#efeee8; --ink:#171a19; --violet:#574ae0; --chart:#d0dc94; --line:#d3d3cd; --muted:#4d514e; --pad:max(clamp(20px,5vw,64px), calc((100vw - 1160px) / 2)); }
     * { box-sizing: border-box; }
+    html.dark-edge { background:var(--ink); } /* rubber-band past the dark footer shows ink, not paper */
     body { margin:0; background:var(--paper); color:var(--ink); font:400 17px/1.6 'Inter Tight',system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
     a { color:inherit; text-decoration:none; }
     a:focus-visible { outline:2px solid var(--violet); outline-offset:4px; }
@@ -205,7 +206,7 @@
         </a>
         <div class="info">
           <span class="cap">WirelessLab@UCLA · 2024–</span>
-          <h3>Beam refinement</h3>
+          <h3>Deep learning for beam refinement</h3>
           <p>Full-duplex base stations must pick a beam pair while self-interference and cross-link interference keep shifting. Probing every pair is too expensive, and prior methods like STEER+ spend airtime on local searches that repeat as users move. We model self-interference across all candidate pairs with a transformer neural process, probe the pair with the highest plausible performance, and stop once the best pair so far is likely near-optimal. On measured 28 GHz data, it probes about 10 of 625 candidate pairs on average and outperforms STEER+ and Bayesian optimization at the same airtime.</p>
           <div class="papers">
             <article class="pub">
@@ -288,6 +289,8 @@
     <footer class="cap"><span>© 2026 Ethan Ge</span><a href="#">Top ↑</a></footer>
   </section>
   <script>
+    const tint = () => document.documentElement.classList.toggle('dark-edge', scrollY > innerHeight);
+    tint(); addEventListener('scroll', tint, { passive: true });
     // Reveal blocks as they enter the viewport; items entering together stagger. RemoteRF numbers count up.
     if (document.documentElement.classList.contains('js')) {
       const countUp = b => {
