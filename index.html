@@ -31,7 +31,7 @@
     header nav a:hover { color:var(--violet); }
     .hero { position:relative; height:100svh; min-height:600px; max-height:980px; overflow:hidden; }
     /* RemoteRF rack photo as a feathered, desaturated backdrop under the beam */
-    .hero-photos::before { content:""; position:absolute; pointer-events:none; mix-blend-mode:multiply; filter:grayscale(1) contrast(1.15); }
+    .hero-photos::before { content:""; position:absolute; pointer-events:none; filter:grayscale(1) contrast(1.15); }
     .hero-photos::before { top:0; bottom:0; right:0; width:60%; background:url(assets/remoterf-rack.jpg) 0% 75% / 110% auto no-repeat; opacity:.32;
       -webkit-mask-image:radial-gradient(ellipse 48% 52% at 58% 46%, #000 15%, transparent 100%); mask-image:radial-gradient(ellipse 48% 52% at 58% 46%, #000 15%, transparent 100%); }
     .hero-text { position:absolute; left:var(--pad); right:var(--pad); bottom:clamp(28px,6vh,64px); z-index:2; pointer-events:none; }
@@ -134,12 +134,14 @@
       .pub .tag { grid-column:2; }
     }
     /* Scroll reveals (only when JS + motion are allowed; html.js is set in <head>) */
-    .hero-photos { position:absolute; inset:0; pointer-events:none; }
+    .hero-photos { position:absolute; inset:0; pointer-events:none; mix-blend-mode:multiply; /* feather the bottom so the parallax-shifted photo never hard-clips */
+      -webkit-mask-image:linear-gradient(#000 60%, transparent); mask-image:linear-gradient(#000 60%, transparent); }
     .js :is(.sec-head, .row, .stats, .games, .pub, .award, .about .lede, .about dl, .hero h1, .hero-foot) {
       opacity:0; transform:translateY(28px); transition:opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1); transition-delay:var(--d, 0ms); }
     .js :is(.sec-head, .row, .stats, .games, .pub, .award, .about .lede, .about dl, .hero h1, .hero-foot).in { opacity:1; transform:none; }
     .js .hero-photos { opacity:0; transform:scale(1.04); transition:opacity 1.6s ease, transform 2.4s cubic-bezier(.2,.7,.2,1); }
     .js .hero-photos.in { opacity:1; transform:none; }
+    .js .hero-photos::before { transform:translateY(var(--py, 0)); will-change:transform; } /* parallax: photo lags the text by 25% */
     .js .sec-head { position:relative; border-bottom-color:transparent; }
     .js .sec-head::after { content:""; position:absolute; left:0; right:0; bottom:-1px; height:1px; background:var(--ink); transform:scaleX(0); transform-origin:left; transition:transform 1.2s cubic-bezier(.7,0,.2,1) calc(var(--d, 0ms) + .15s); }
     .js .sec-head.in::after { transform:none; }
@@ -291,7 +293,11 @@
     <footer class="cap"><span>© 2026 Ethan Ge</span><a href="#">Top ↑</a></footer>
   </section>
   <script>
-    const tint = () => document.documentElement.classList.toggle('dark-edge', scrollY > innerHeight);
+    const heroPhotos = document.querySelector('.hero-photos');
+    const tint = () => {
+      document.documentElement.classList.toggle('dark-edge', scrollY > innerHeight);
+      if (scrollY < innerHeight) heroPhotos.style.setProperty('--py', scrollY * .25 + 'px');
+    };
     tint(); addEventListener('scroll', tint, { passive: true });
     // Reveal blocks as they enter the viewport; items entering together stagger. RemoteRF numbers count up.
     if (document.documentElement.classList.contains('js')) {
